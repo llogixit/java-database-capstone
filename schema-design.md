@@ -36,13 +36,23 @@ CREATE TABLE admin (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
-
+CREATE TABLE prescriptions (
+    prescription_id INT AUTO_INCREMENT PRIMARY KEY,
+    appointment_id INT NOT NULL,
+    patient_id INT NOT NULL,
+    doctor_id INT NOT NULL,
+    issued_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    instructions TEXT,
+    FOREIGN KEY (appointment_id) REFERENCES appointments(appointment_id) ON DELETE CASCADE,
+    FOREIGN KEY (patient_id) REFERENCES patients(patient_id) ON DELETE CASCADE,
+    FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id) ON DELETE CASCADE
+);
 
 {
   "_id": "presc_001",
   "patient_id": 12,          // Reference to MySQL patients table
   "doctor_id": 5,            // Reference to MySQL doctors table
+  "appointment_id": 101,     // Reference to MySQL appointments table
   "date_issued": "2026-06-21T10:30:00Z",
   "medications": [
     {
@@ -64,3 +74,5 @@ CREATE TABLE admin (
     "date": "2026-07-01T09:00:00Z"
   }
 }
+
+
